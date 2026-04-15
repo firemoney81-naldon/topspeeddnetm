@@ -1,23 +1,612 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Home</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <!--
-      Need a visual blank slate?
-      Remove all code in `styles.css`!
-    -->
-    <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="script.js"></script>
-  </head>
-  <body>
-    <nav>
-      <a href="/" aria-current="page">Home</a>
-      <a href="/page2.html">Other page</a>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "초고속 인터넷 100M/500M 비교 서비스",
+      "serviceType": "인터넷 가입 및 요금제 추천",
+      "provider": {
+        "@type": "Organization",
+        "name": "인터넷 가입 비교 전문 센터",
+        "url": "https://yourdomain.com",
+        "sameAs": [
+          "https://www.facebook.com/yourpage",
+          "https://www.instagram.com/yourpage"
+        ]
+      },
+      "areaServed": "대한민국",
+      "description": "인터넷 100메가와 500메가 요금제, 속도 차이점 분석 및 신규 가입 시 현금 지원금 혜택 안내.",
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "인터넷 상품 요금제 안내",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "인터넷 100메가 (광랜)"
+            },
+            "description": "가정용 일반 인터넷 (Download: 100Mbps, Upload: 100Mbps)"
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "인터넷 500메가 (기가 라이트)"
+            },
+            "description": "4K 스트리밍, 온라인 게임에 적합한 기가 인터넷 (Download: 500Mbps, Upload: 500Mbps)"
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "인터넷 1기가 (기가)"
+            },
+            "description": "다수의 기기 사용, 대용량 파일 전송에 최적화된 프리미엄 서비스 (Download: 1Gbps, Upload: 1Gbps)"
+          }
+        ]
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: "Noto Sans KR", sans-serif;
+      margin: 0;
+      padding: 0;
+      line-height: 1.7;
+      background-color: #f8f9fa; /* 부드러운 배경색 */
+      color: #333;
+    }
+    header {
+      background-color: #007bff; /* 청량한 파란색 */
+      color: white;
+      padding: 2.5rem 1rem 1.5rem;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+    header h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap; /* 모바일 대응 */
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease, transform 0.2s ease;
+      position: relative;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+    }
+    nav a:hover, nav a:focus {
+      color: #ffc107; /* 밝은 노란색 */
+      background-color: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+    main {
+      max-width: 1000px;
+      margin: 2.5rem auto;
+      padding: 0 2rem;
+      background-color: white;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.08);
+      border-radius: 12px;
+    }
+    h2 {
+      color: #007bff;
+      font-weight: 700;
+      border-bottom: 2px solid #e9ecef;
+      padding-bottom: 0.8rem;
+      margin-top: 3rem;
+      font-size: 2rem;
+    }
+    h3 {
+      color: #34495e;
+      margin-top: 2rem;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 2rem;
+      background-color: #ffffff;
+      font-size: 0.95rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      border-radius: 8px;
+      overflow: hidden; /* 테이블 라운딩 처리 */
+    }
+    th, td {
+      padding: 1.2rem;
+      border: 1px solid #dee2e6;
+      text-align: left;
+    }
+    th {
+      background-color: #f1f3f5;
+      color: #34495e;
+      font-weight: 700;
+      text-align: center;
+    }
+    td strong {
+      color: #007bff;
+    }
+    .main-image {
+      width: 100%;
+      height: auto;
+      max-height: 400px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+    .comparison-chart {
+      margin: 2rem 0;
+      background-color: #f8f9fa;
+      padding: 1.5rem;
+      border-radius: 10px;
+      border-left: 5px solid #28a745;
+    }
+    .comparison-chart h3 {
+      color: #28a745;
+      margin-top: 0;
+    }
+    dl dt {
+      font-weight: 700;
+      margin-top: 1.5rem;
+      cursor: pointer;
+      color: #007bff;
+      transition: color 0.3s ease;
+      font-size: 1.1rem;
+      padding: 15px 0;
+      border-bottom: 1px solid #dee2e6;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    dl dt:hover {
+      color: #0056b3;
+    }
+    dl dd {
+      margin-left: 0;
+      margin-bottom: 1.5rem;
+      display: none;
+      background-color: #f1f3f5;
+      padding: 1.2rem;
+      border-radius: 8px;
+      line-height: 1.8;
+    }
+    dl dt.active + dd {
+      display: block;
+    }
+    .cta-button {
+      display: block;
+      width: fit-content;
+      margin: 3rem auto;
+      background-color: #28a745; /* 초록색 강조 */
+      color: white;
+      font-weight: 700;
+      padding: 1.5rem 3rem;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      text-align: center;
+      box-shadow: 0 5px 20px rgba(40, 167, 69, 0.3);
+      font-size: 1.2rem;
+    }
+    .cta-button:hover {
+      background-color: #218838;
+      transform: translateY(-5px);
+    }
+    .keyword-tags {
+      margin: 1.5rem 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+    .keyword-tags a {
+      background-color: #e6f7ff; /* 부드러운 하늘색 */
+      color: #007bff;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    .keyword-tags a:hover {
+      background-color: #cceeff;
+      color: #0056b3;
+    }
+    .external-links {
+      margin: 3rem 0;
+      padding: 1.5rem;
+      border: 1px solid #dee2e6;
+      border-radius: 8px;
+      background-color: #f8f9fa;
+    }
+    .external-links h3 {
+      color: #007bff;
+      border-bottom: 1px dashed #ced4da;
+      padding-bottom: 0.5rem;
+      margin-top: 0;
+    }
+    .external-links ul {
+      list-style-type: disc;
+      padding-left: 20px;
+    }
+    .external-links a {
+      color: #007bff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+    .external-links a:hover {
+      color: #0056b3;
+      text-decoration: underline;
+    }
+    footer {
+      text-align: center;
+      padding: 2.5rem;
+      font-size: 0.9rem;
+      color: #777;
+      background-color: #e9ecef;
+      margin-top: 3rem;
+    }
+    /* Simple chart visualization (using CSS only for demonstration) */
+    .bar-chart {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 2rem 0;
+    }
+    .bar-chart div {
+      display: flex;
+      width: 100%;
+      height: 40px;
+      margin-bottom: 10px;
+      background-color: #f1f3f5;
+      border-radius: 5px;
+      overflow: hidden;
+      position: relative;
+    }
+    .bar-chart div span {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-weight: 700;
+      color: #fff;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+      z-index: 2;
+    }
+    .bar-chart div::after {
+      content: '';
+      background-color: #007bff;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transition: width 0.5s ease;
+    }
+    .bar-chart .bar100::after { width: 20%; background-color: #007bff; }
+    .bar-chart .bar500::after { width: 100%; background-color: #28a745; }
+    .bar-chart .bar100 span { color: #333; left: 10px; z-index: 1; text-shadow: none; }
+    .bar-chart .bar500 span { color: #fff; left: 10px; z-index: 1; text-shadow: none; }
+    .bar-label { font-size: 1.1rem; margin-top: 5px; color: #555; }
+
+    /* Input form section design */
+    .form-section {
+      background-color: #f8f9fa;
+      padding: 2rem;
+      border-radius: 12px;
+      margin-bottom: 2rem;
+      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+    .form-section input[type="text"], .form-section select {
+      width: calc(100% - 22px);
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #ced4da;
+      border-radius: 8px;
+      box-sizing: border-box;
+      font-size: 1rem;
+    }
+    .form-section button {
+      width: 100%;
+      padding: 15px;
+      background-color: #ffc107;
+      border: none;
+      border-radius: 8px;
+      color: #333;
+      font-weight: 700;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .form-section button:hover {
+      background-color: #e0a800;
+    }
+    .form-section label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 600;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>인터넷 100메가 500메가 차이점 | 2026년 요금제 완벽 비교 분석</h1>
+    <nav aria-label="메인 메뉴">
+      <ul>
+        <li><a href="#intro">인터넷 속도 비교</a></li>
+        <li><a href="#cost-guide">가격 및 혜택</a></li>
+        <li><a href="#real-world">실사용 체감 차이</a></li>
+        <li><a href="#provider-compare">통신사별 비교</a></li>
+        <li><a href="#faq">자주 묻는 질문</a></li>
+        <li><a href="#contact">전문가 견적 문의</a></li>
+      </ul>
     </nav>
-    <main>
-      <h1>Home page</h1>
-    </main>
-  </body>
-</html>
+  </header>
+
+  <main>
+    <section id="intro">
+      <img src="https://images.pexels.com/photos/356170/pexels-photo-356170.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="인터넷 네트워크 케이블과 노트북" class="main-image">
+      <h2>2026년, 인터넷 100메가와 500메가 중 나에게 맞는 선택은?</h2>
+      <p>새로운 인터넷 가입을 앞두고 '인터넷 100메가 500메가 차이'에 대해 고민하는 분들이 많습니다. 100Mbps는 흔히 '광랜'이라 불리며 기본적인 웹 서핑과 간단한 스트리밍에 적합합니다. 반면 500Mbps는 '기가 라이트'로 불리며, 대용량 파일 다운로드, 4K/8K 고화질 영상 시청, 온라인 게임 등 고사양 활동에 유리합니다. 단순히 가격이 싸다고 100Mbps를 선택했다가 속도 때문에 후회하는 경우가 많고, 반대로 불필요하게 500Mbps를 선택해 매월 더 많은 비용을 지출하는 경우도 있습니다. 이 가이드는 고객님의 사용 패턴에 맞춰 가장 합리적인 선택을 할 수 있도록 2026년 최신 정보를 바탕으로 100메가와 500메가의 장단점을 명확히 비교 분석해 드립니다.</p>
+      <div class="keyword-tags" aria-label="연관 검색 키워드">
+        <a href="#cost-guide">인터넷가입비용</a>
+        <a href="#cost-guide">인터넷견적</a>
+        <a href="#cost-guide">기가인터넷가격</a>
+        <a href="#provider-compare">인터넷전문업체</a>
+        <a href="#intro">인터넷가입순위</a>
+        <a href="#cost-guide">인터넷요금비교</a>
+        <a href="#contact">인터넷신규가입혜택</a>
+        <a href="#real-world">인터넷속도테스트</a>
+        <a href="#real-world">AI서비스속도</a>
+      </div>
+    </section>
+
+    ---
+
+    <section id="speed-compare">
+      <h2>핵심 비교 분석: 100메가 vs 500메가 속도 및 요금제 차이</h2>
+      <p>인터넷 속도는 단순히 숫자로만 판단하기 어렵습니다. 다운로드 속도와 업로드 속도, 그리고 핑(Ping)이라 불리는 지연 속도까지 복합적으로 고려해야 합니다. 다음은 100메가와 500메가 요금제의 구체적인 차이점입니다.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>구분</th>
+            <th>100Mbps (광랜)</th>
+            <th>500Mbps (기가 라이트)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>다운로드 속도</strong></td>
+            <td>최대 100Mbps</td>
+            <td>최대 500Mbps (100Mbps 대비 5배 빠름)</td>
+          </tr>
+          <tr>
+            <td><strong>업로드 속도</strong></td>
+            <td>최대 100Mbps</td>
+            <td>최대 500Mbps (100Mbps 대비 5배 빠름)</td>
+          </tr>
+          <tr>
+            <td><strong>지연 속도 (Ping)</strong></td>
+            <td>일반적으로 10ms~30ms 내외</td>
+            <td>일반적으로 5ms~15ms 내외로 더 빠름</td>
+          </tr>
+          <tr>
+            <td><strong>월 예상 비용 (3년 약정)</strong></td>
+            <td><strong>약 22,000원</strong> (통신사별 차이 있음)</td>
+            <td><strong>약 33,000원</strong> (통신사별 차이 있음)</td>
+          </tr>
+          <tr>
+            <td><strong>추천 대상</strong></td>
+            <td>1인 가구, 웹 서핑, 간단한 HD 스트리밍, 이메일, AI 챗봇(ChatGPT, Gemini) 사용</td>
+            <td>2인 이상 가구, 4K/8K 스트리밍, 고사양 온라인 게임(FPS), 대용량 파일 전송, 주식/재택근무</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>실제 다운로드 시간 비교 (1GB 파일 기준)</h3>
+      <div class="bar-chart">
+        <div class="bar100"><span>100Mbps: 약 80초 소요</span></div>
+        <div class="bar-label">100Mbps</div>
+        <div class="bar500"><span>500Mbps: 약 16초 소요</span></div>
+        <div class="bar-label">500Mbps</div>
+      </div>
+      <p>이 그래프에서 보듯이 100메가와 500메가의 차이는 대용량 파일 다운로드에서 극명하게 나타납니다. 특히 500메가 인터넷은 1기가 인터넷과 비교했을 때도 가격 대비 성능이 뛰어나 '반기가 인터넷'이라고도 불립니다. 최근 AI 기술 발전으로 인해 대규모 언어 모델(LLM) 기반의 Gemini나 ChatGPT를 활용한 작업이 늘어나고 있으며, 데이터 전송량이 증가하는 추세입니다. 이러한 변화는 100메가 인터넷 사용자들에게 속도 저하로 인한 불편함을 야기할 수 있습니다.</p>
+    </section>
+
+    ---
+
+    <section id="real-world">
+      <h2>실사용 시 체감하는 '인터넷 100메가 500메가 차이점' 상세 분석</h2>
+      <p>숫자만으로는 체감하기 어려운 실생활에서의 차이점을 자세히 설명해 드립니다. 고객님의 일상 생활 패턴을 대입하여 현명한 선택을 해보세요.</p>
+      
+      <h3>1. 영상 스트리밍 및 미디어 시청</h3>
+      <p>요즘은 유튜브, 넷플릭스 등 OTT 서비스에서 4K UHD 화질을 기본으로 제공합니다. 100Mbps 인터넷으로도 4K 스트리밍이 가능하다고는 하지만, 여러 기기에서 동시 시청을 하거나 8K 영상을 시청할 때는 버퍼링이 발생할 확률이 높습니다. 500Mbps 인터넷은 다수의 가족 구성원이 각자의 기기(TV, 태블릿, 스마트폰)에서 고화질 스트리밍을 동시에 즐길 때 끊김 없는 쾌적한 환경을 제공합니다. 특히 2026년 이후에는 8K 콘텐츠와 AI 기반 실시간 스트리밍 서비스가 보편화될 것으로 예상되며, 100메가로는 한계에 부딪힐 수 있습니다.</p>
+
+      <h3>2. 온라인 게임 (FPS, MMORPG)</h3>
+      <p>온라인 게임에서 가장 중요한 요소 중 하나는 '핑(Ping)'입니다. 핑이 낮을수록 서버와 데이터 통신 속도가 빠르므로 반응 속도가 빨라져 게임 플레이가 유리합니다. 500Mbps 인터넷은 100Mbps 인터넷에 비해 평균 핑 수치가 낮아 FPS 게임(배틀그라운드, 오버워치 등)이나 롤(League of Legends) 같은 실시간 전략 게임에서 랙(Lag) 현상을 줄여줍니다. 특히 패치(Update) 파일이 수십 GB에 달하는 최신 게임에서는 100메가와 500메가의 다운로드 속도 차이가 엄청나게 체감됩니다.</p>
+
+      <h3>3. AI 서비스 및 재택근무 환경</h3>
+      <p>최근 AI 기술이 급속도로 발전하면서 ChatGPT, Google Gemini 등 다양한 AI 서비스를 활용하는 사용자가 증가하고 있습니다. AI 서비스는 대량의 데이터를 실시간으로 주고받으므로, 빠르고 안정적인 인터넷 환경이 필수적입니다. 특히 재택근무 시 화상 회의(Zoom, Google Meet)나 대용량 파일 공유 작업을 할 때, 100메가 인터넷은 동시 접속자가 많을 경우 속도 저하가 발생하여 업무에 지장을 줄 수 있습니다. 500메가는 이러한 재택근무나 AI 활용 환경에서 안정적인 업로드 속도를 보장하여 효율성을 높여줍니다.</p>
+
+      <h3>4. 다수의 기기 동시 연결 (IoT 환경)</h3>
+      <p>스마트폰, 태블릿, PC 외에도 스마트 TV, AI 스피커, 홈CCTV, 로봇 청소기 등 IoT(사물인터넷) 기기가 보편화되었습니다. 한 가정에서 10개가 넘는 기기가 동시에 인터넷에 연결되는 것이 일반적입니다. 100메가 인터넷은 동시 접속 기기가 많아지면 각 기기로 할당되는 대역폭이 줄어들어 속도가 눈에 띄게 느려집니다. 500메가는 100메가보다 훨씬 넓은 대역폭을 제공하므로 여러 기기를 동시에 사용해도 속도 저하를 최소화할 수 있습니다.</p>
+    </section>
+    
+    ---
+
+    <section id="cost-guide">
+      <h2>인터넷 요금제 가격 및 2026년 가입 혜택 총정리</h2>
+      <p>인터넷 가입 시 가장 중요한 요소 중 하나는 비용입니다. '인터넷 저렴한곳'을 찾기 위해서는 단순히 월 요금만 볼 것이 아니라, 신규 가입 시 제공되는 '사은품'과 '현금지원' 금액까지 합산하여 최종 혜택을 비교해야 합니다. 2026년 현재 통신사별, 상품별 '평균' 가격과 '지원금' '예상' 금액을 바탕으로 합리적인 선택을 할 수 있도록 도와드립니다.</p>
+
+      <h3>1. 통신사별 월 요금 비교 (평균 금액)</h3>
+      <p>SKT, KT, LGU+ 세 통신사의 100메가와 500메가 인터넷 단독 상품(TV 미포함) 월 요금을 비교해 보았습니다. 결합 할인, 약정 기간, 제휴 카드 등에 따라 '금액' 차이가 발생할 수 있으므로, 정확한 '견적'은 '전문 업체'를 통해 확인해야 합니다.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>통신사</th>
+            <th>100Mbps 월 요금 (3년 약정)</th>
+            <th>500Mbps 월 요금 (3년 약정)</th>
+            <th>1기가 월 요금 (3년 약정)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>SK브로드밴드</td>
+            <td>약 22,000원</td>
+            <td>약 33,000원</td>
+            <td>약 38,500원</td>
+          </tr>
+          <tr>
+            <td>KT 올레</td>
+            <td>약 22,000원</td>
+            <td>약 33,000원</td>
+            <td>약 38,500원</td>
+          </tr>
+          <tr>
+            <td>LG유플러스</td>
+            <td>약 22,000원</td>
+            <td>약 33,000원</td>
+            <td>약 38,500원</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>2. 신규 가입 시 현금지원금 및 사은품 혜택 (전문 업체 추천)</h3>
+      <p>통신사 본사보다 인터넷 '가입 전문 업체'를 통해 신규 가입하는 것이 '현금지원' 혜택을 더 많이 받을 수 있습니다. 전문 업체들은 '가입' 유치 경쟁을 위해 '상품권'이나 '현금' '지원금'을 제공하며, 이는 '내돈내산' 후기에서도 확인되는 사실입니다. 100메가와 500메가 상품의 '사은품' 금액은 통신사별 정책에 따라 매월 변동되며, 일반적으로 500메가 이상 상품 가입 시 더 많은 '혜택'을 받을 수 있습니다. '디시' 같은 커뮤니티나 '네이버' 카페에서 '신규 가입' 후기를 검색하여 '전문 업체'의 '순위'와 '평가'를 확인해 보는 것이 좋습니다. "인터넷 500메가 싼곳"을 찾으려면 월 요금 + 사은품 금액을 종합적으로 비교해야 합니다.</p>
+      <div class="comparison-chart">
+        <h3>인터넷 가입 유형별 사은품 혜택 비교 (2026년 기준)</h3>
+        <ul>
+          <li><strong>본사 직접 가입:</strong> 사은품 금액이 적거나 상품권 위주로 제공되는 경우가 많음.</li>
+          <li><strong>온라인 전문 업체:</strong> 현금지원금 혜택이 가장 높음. 통신사별 비교를 통해 최대 금액을 받을 수 있음. (평균 30만원~50만원대)</li>
+        </ul>
+      </div>
+    </section>
+
+    ---
+
+    <section id="provider-compare">
+      <h2>전국 지역별 통신사 선택 가이드 및 장단점 비교</h2>
+      <p>통신사 선택 시 '전국' '지역명'에 따른 커버리지와 설치 가능 여부를 확인해야 합니다. '서울' '부산' '대구' '인천' '광주' '대전' '울산' 등 주요 '광역시'와 '수원' '고양' '용인' '창원' '청주' '전주' '천안' 등 대도시 지역에서는 SKT, KT, LGU+ 세 통신사 모두 100메가와 500메가 서비스가 원활하게 제공됩니다. 하지만 '평택' '김해' '파주' '양산' '구미' '충주' '춘천' '강릉' '속초' '제주' 등 일부 지방 소도시나 아파트 외 지역에서는 통신사별 커버리지 차이가 발생할 수 있습니다. 특히 SKT는 SK브로드밴드, KT는 KT 인터넷, LGU+는 LG유플러스 인터넷으로 각각 서비스를 제공하며, 각 통신사의 '장점'과 '단점'이 뚜렷합니다. 예를 들어, KT는 '전국' 커버리지가 가장 넓고 안정적이지만, LGU+나 SKT는 TV 결합 상품에서 '할인' 혜택이 더 좋을 수 있습니다. '인터넷 가입 순위'는 '네이버'나 '구글' 검색 시 노출되는 '전문 업체'들의 평가를 통해 확인할 수 있습니다.</p>
+
+      <h3>SKT (SK브로드밴드)</h3>
+      <p>SKT 이동통신과 결합 시 '할인' 혜택이 매우 우수합니다. SKT 휴대폰을 사용하는 가족 구성원이 많다면 '결합' 상품을 통해 '저렴한곳'을 찾을 수 있습니다. 'SKT 500메가'는 'B tv'와 결합하여 '상품' 구성이 다양합니다. '광주' '대전' 지역의 신규 아파트 단지에서는 'SK브로드밴드'의 광케이블 설치가 잘 되어 있어 안정적인 속도를 기대할 수 있습니다.</p>
+
+      <h3>KT (KT 인터넷)</h3>
+      <p>KT는 '전국' 커버리지와 '인터넷' 품질의 '장점'이 가장 뛰어난 통신사로 평가받습니다. '전국망'이 잘 구축되어 있어 '제주'를 포함한 도서 산간 지역에서도 안정적인 '속도'를 제공합니다. 'KT 100메가 500메가 차이'를 비교할 때, KT는 타사 대비 '핑'이 안정적이라는 '장점'이 있어 '온라인 게임' 사용자에게 '추천'됩니다. '인터넷 전문 업체'를 통해 'KT 500메가' 상품을 '신규 가입'하면 '현금지원' 혜택도 받을 수 있습니다.</p>
+
+      <h3>LGU+ (LG유플러스)</h3>
+      <p>LG유플러스는 '인터넷'과 'IPTV' 결합 시 '할인' 혜택이 좋습니다. 특히 'U+tv'는 다양한 콘텐츠와 부가 서비스로 '유튜브'나 '넷플릭스' 사용자에게 인기가 높습니다. 'LGU+ 500메가' 상품의 경우 '경기' '충청' 지역을 중심으로 공격적인 '신규 가입' '이벤트'를 진행하고 있습니다. 'LGU+ 100메가 500메가 차이' 비교 시, LGU+는 'Wi-Fi' 공유기 성능이 좋다는 평가를 받기도 합니다.</p>
+    </section>
+    
+    ---
+
+    <section id="faq">
+      <h2>자주 묻는 질문 (FAQ)</h2>
+      <dl>
+        <dt tabindex="0" aria-expanded="false">100메가 인터넷을 사용 중인데 500메가로 변경(업그레이드)할 수 있나요?</dt>
+        <dd>네, 기존 사용 중인 통신사를 통해 '업그레이드'가 가능합니다. 다만, 약정 기간이 남아있다면 위약금이 발생할 수 있으므로 '전문 업체'나 통신사에 문의하여 '견적'을 받아보세요. 통신사를 변경하여 '신규 가입'으로 진행하면 '현금지원'을 더 많이 받을 수 있습니다.</dd>
+        
+        <dt tabindex="0" aria-expanded="false">인터넷 100메가 500메가 차이 외에 1기가 인터넷도 있나요?</dt>
+        <dd>네, 100메가와 500메가 외에도 1기가 인터넷(1Gbps)이 있습니다. '기가 인터넷'은 500메가보다도 2배 빠른 속도로, 대규모 '사무실이사'나 여러 대의 고사양 PC를 사용하는 '게임방'에 적합합니다. 일반 가정에서는 500메가로도 충분하지만, '1기가 인터넷'의 '장점'은 압도적인 '업로드 속도'에 있습니다. 월 요금은 500메가 대비 5천원~1만원 정도 '금액' 차이가 납니다.</dd>
+
+        <dt tabindex="0" aria-expanded="false">인터넷 가입 시 '현금지원'은 믿을 수 있나요?</dt>
+        <dd>네, '현금지원'은 통신사 본사에서 대리점에 지급하는 '판매 수수료'의 일부를 고객에게 '지원금'으로 돌려주는 방식으로, '전문 업체'를 통해 '신규 가입' 시 합법적으로 받을 수 있습니다. 다만, '인터넷 가입' 시 '사은품' 지급 시기, '지원금' '금액' 등을 '계약서'에 명시해야 안전합니다. '네이버'나 '구글'에서 '내돈내산 후기'를 확인하여 '업체'의 신뢰도를 미리 파악하는 것이 좋습니다.</dd>
+
+        <dt tabindex="0" aria-expanded="false">우리 집에는 500메가 인터넷 설치가 가능한가요?</dt>
+        <dd>인터넷 설치 가능 여부는 '전국 지역명 키워드'에 관계없이 건물 종류에 따라 달라집니다. 대부분의 아파트는 '기가 인터넷' 설치가 가능하지만, 오래된 다가구 주택이나 오피스텔은 '100메가'만 지원되는 경우가 많습니다. '전문 업체'에 '견적' 문의 시 주소를 알려주면 설치 가능 여부를 바로 확인할 수 있습니다.</dd>
+      </dl>
+    </section>
+
+    ---
+
+    <section id="reliable-sources">
+      <h2>신뢰할 수 있는 외부 정보 (공신력 있는 출처)</h2>
+      <p>인터넷 서비스 가입 전, 소비자 보호를 위한 공신력 있는 기관의 정보를 확인해 보세요.</p>
+      <div class="external-links">
+        <ul>
+          <li><a href="https://www.kcc.go.kr/user.do?mode=view&page=A05050300&dc=K02000000&boardId=1045&cp=1&rowId=91107" target="_blank">방송통신위원회 (KCC) - 이용약관 및 소비자 가이드</a></li>
+          <li><a href="https://www.kca.go.kr/home/sub.do?menu_seq=29" target="_blank">한국소비자원 - 통신 서비스 관련 피해구제 정보</a></li>
+          <li><a href="https://www.law.go.kr/lsInfoP.do?lsiSeq=184136#0000" target="_blank">국가법령정보센터 - 전기통신사업법</a></li>
+          <li><a href="https://www.wiseuser.go.kr/wiseuser/service/internet_service.do" target="_blank">스마트컨슈머 - 인터넷 서비스 요금 비교</a></li>
+          <li><a href="https://namu.wiki/w/인터넷" target="_blank">나무위키 - 인터넷 통신 기술 및 종류</a></li>
+        </ul>
+      </div>
+    </section>
+
+    ---
+
+    <section id="contact">
+      <h2>2026년 인터넷 가입 현금지원 최대 혜택 문의하기</h2>
+      <p>인터넷 100메가 500메가 차이를 명확히 이해하고, 나에게 맞는 요금제를 선택했다면 이제 '신규 가입'을 통해 최대 혜택을 받을 차례입니다. '전문 업체'를 통해 '견적'을 요청하면 '통신사별' '할인' 혜택과 '현금지원' '금액'을 한 번에 비교할 수 있습니다. 아래 양식을 통해 간편하게 문의하시면 '저렴한곳'을 '추천'해 드리고, '최대 사은품' '지원금'을 안내해 드립니다.</p>
+
+      <!-- 사용자 체류 시간 증가를 위한 입력 양식 (Dwell Time Optimization) -->
+      <div class="form-section">
+        <h3>1:1 맞춤형 인터넷 견적 상담 신청</h3>
+        <form action="#" method="post">
+          <label for="name">이름:</label>
+          <input type="text" id="name" name="name" placeholder="이름을 입력해 주세요" required>
+
+          <label for="phone">연락처:</label>
+          <input type="text" id="phone" name="phone" placeholder="휴대폰 번호를 입력해 주세요" required>
+
+          <label for="address">설치 주소 (동/호수 포함):</label>
+          <input type="text" id="address" name="address" placeholder="예: 서울시 강남구 역삼동 123-456" required>
+
+          <label for="plan">희망 요금제:</label>
+          <select id="plan" name="plan" required>
+            <option value="">-- 희망 요금제를 선택하세요 --</option>
+            <option value="100m">인터넷 100M (가성비)</option>
+            <option value="500m">인터넷 500M (표준 추천)</option>
+            <option value="1g">인터넷 1G (고사양)</option>
+          </select>
+
+          <label for="message">문의 사항 (결합 상품, TV 유무 등):</label>
+          <textarea id="message" name="message" rows="4" placeholder="TV 결합, 가족 결합 할인, 위약금 등 궁금한 점을 적어주세요."></textarea>
+
+          <button type="submit">무료 견적 신청 및 혜택 조회</button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    document.querySelectorAll('dl dt').forEach((dt) => {
+      dt.addEventListener('click', () => {
+        const dd = dt.nextElementSibling;
+        const expanded = dt.getAttribute('aria-expanded') === 'true';
+        dt.setAttribute('aria-expanded', !expanded);
+        dt.classList.toggle('active');
+        if (expanded) {
+          dd.style.display = 'none';
+        } else {
+          dd.style.display = 'block';
+        }
+      });
+      dt.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          dt.click();
+        }
+      });
+    });
+  </script>
+  
